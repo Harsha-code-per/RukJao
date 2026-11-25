@@ -263,6 +263,7 @@ main:focus {
 .inbox {
   position: relative;
   height: min(36rem, 70svh);
+  padding-right: 3rem;
   overflow: hidden;
   mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
 }

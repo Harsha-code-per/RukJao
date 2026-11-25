@@ -35,7 +35,7 @@ export const Result = ({ result, message, language, onReset }: ResultProps) => {
         <h2 id="verdict" ref={heading} tabIndex={-1}>{copy.title[result.verdict]}</h2>
         <p className="risk">
           <span>{copy.risk(result.risk)}</span>
-          <meter min={0} max={100} low={25} high={60} optimum={0} value={result.risk} aria-label={copy.risk(result.risk)} />
+          <meter min={0} max={100} low={24} high={59} optimum={0} value={result.risk} aria-label={copy.risk(result.risk)} />
         </p>
       </div>
 

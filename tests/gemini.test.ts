@@ -48,3 +48,24 @@ describe('reviewer', () => {
     expect(await createReviewer(generate, ['a'])(request, engine)).toBeNull();
   });
 });
+
+const generateContent = vi.fn(() => Promise.resolve({ text: valid }));
+vi.mock('@google/genai', () => ({
+  GoogleGenAI: vi.fn(function GoogleGenAI() {
+    return { models: { generateContent } };
+  }),
+}));
+
+describe('live Gemini call', () => {
+  it('asks for schema-shaped JSON with the safety instruction', async () => {
+    const { geminiGenerate, SYSTEM_INSTRUCTION } = await import('../server/ai/gemini');
+    expect(await geminiGenerate('key')('model-x', 'prompt')).toBe(valid);
+    expect(generateContent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        model: 'model-x',
+        contents: 'prompt',
+        config: expect.objectContaining({ systemInstruction: SYSTEM_INSTRUCTION, responseMimeType: 'application/json' }) as unknown,
+      }),
+    );
+  });
+});
