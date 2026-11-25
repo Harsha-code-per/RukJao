@@ -29,6 +29,28 @@ test('a scam example gets a scam verdict and a plan, keyboard only', async ({ pa
   await audit(page);
 });
 
+test('the landing stamp never widens the page, so phones keep their zoom and taps land', async ({ page }) => {
+  await page.goto('/check');
+  // Record the widest the page gets on every frame while the result stamp animates in.
+  await page.evaluate(() => {
+    const w = window as Window & { widest?: number };
+    w.widest = 0;
+    const sample = (): void => {
+      w.widest = Math.max(w.widest ?? 0, document.documentElement.scrollWidth);
+      requestAnimationFrame(sample);
+    };
+    sample();
+  });
+  await page.getByRole('button', { name: '“Digital arrest” call' }).click();
+  await page.getByRole('button', { name: 'Check this message' }).click();
+  await expect(page.getByRole('heading', { name: 'This is a scam' })).toBeVisible();
+  await page.waitForTimeout(600);
+  const widest = await page.evaluate(() => (window as Window & { widest?: number }).widest ?? 0);
+  expect(widest).toBeLessThanOrEqual(page.viewportSize()?.width ?? 0);
+  await page.getByRole('button', { name: 'Check another message' }).click({ timeout: 5000 });
+  await expect(page.getByText('Your verdict and the steps to take will appear here.')).toBeVisible();
+});
+
 test('the Hindi example answers in Hindi', async ({ page }) => {
   await page.goto('/check');
   await page.getByRole('button', { name: 'बिजली बिल (Hindi)' }).click();

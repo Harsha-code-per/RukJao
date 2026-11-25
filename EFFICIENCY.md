@@ -4,7 +4,7 @@
 
 - **Engine first, AI second.** The rule engine is pure regex and a URL parser, running in about a millisecond. The AI is called once per *unique* request.
 - **LRU cache** (`server/cache.ts`, 500 entries) keyed by the SHA-256 of the request. Repeats are free and are not counted twice in Firestore. A fallback answer is not cached while AI is configured, so the next try can still reach the model.
-- **AI budget:** low temperature, structured JSON output, an 8-second timeout per model, and a short model chain that stops at the first valid answer.
+- **AI budget:** low temperature, structured JSON output, a 10-second timeout per model (the minimum Gemini accepts), and a short model chain that stops at the first valid answer.
 - **Firestore:** one document per scam family per week, updated with an atomic `increment`. That is two operations per new check, with no queries or scans.
 - **Compression** on every response (`hono/compress`).
 - **Cloud Run:** scales to zero, `--cpu-throttling` (CPU only while handling requests), max 1 instance, 512 MiB.

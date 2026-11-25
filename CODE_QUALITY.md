@@ -1,6 +1,6 @@
 # Code quality
 
-RukJao is deliberately small: about 30 source files, one package, no framework beyond React and Hono.
+RukJao is deliberately small: 32 source files, one package, and no framework beyond React and Hono. The design choices behind this are recorded in [docs/DECISIONS.md](docs/DECISIONS.md).
 
 ## Structure
 
@@ -28,3 +28,29 @@ RukJao is deliberately small: about 30 source files, one package, no framework b
 - Each exported function has a one-line doc comment saying *why*, not *what*.
 - Deliberate shortcuts are marked `ponytail:` with their limit and upgrade path (for example, the in-memory rate limiter).
 - No dead code and no speculative abstraction: one implementation, no interface.
+
+## Measured audit
+
+Measured on the current `main` with `npm run check`, `npx eslint . --max-warnings 0` and a line count that skips blanks and comments.
+
+| Check | Result |
+|---|---|
+| ESLint (`strictTypeChecked`, `stylisticTypeChecked`, react-hooks) | 0 errors, 0 warnings |
+| `tsc --noEmit` (strict, `exactOptionalPropertyTypes`, `noUncheckedIndexedAccess`) | 0 errors |
+| Source files (`server/`, `shared/`, `src/`) | 32 |
+| Longest logic file | `server/ai/gemini.ts`, 77 lines (`rules.ts`, at 172 lines, is a data table) |
+| Longest component | `src/landing/Landing.tsx`, 64 lines |
+| Cyclomatic complexity | ≤ 8 everywhere (lint error above) |
+| Function length | ≤ 30 lines in `.ts`, ≤ 60 in components (lint error above) |
+| Parameters per function | ≤ 3 (lint error above) |
+| `any`, `@ts-ignore`, `eslint-disable` | none |
+| `innerHTML`, `dangerouslySetInnerHTML`, `eval` | none |
+| Tests | 80 Vitest tests at 100% line coverage, plus 10 Playwright runs |
+| Production dependencies with known vulnerabilities | 0 (`npm audit --omit=dev`) |
+
+## Repository hygiene
+
+- `.editorconfig` fixes encoding, line endings and indentation for every editor.
+- `.env.example` documents every setting, with its default and purpose.
+- CI (`.github/workflows/ci.yml`) runs `npm audit`, lint, types, tests with coverage thresholds, the build and the e2e suite on every push. CodeQL scans every push.
+- One branch (`main`) and small, descriptive commits.

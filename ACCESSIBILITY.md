@@ -20,6 +20,7 @@ RukJao's first users include elderly parents who are new to smartphones, so acce
 - **Language:** results in Hindi are marked `lang="hi"`, and so is the Hindi option, so screen readers switch voice.
 - **Contrast:** text colours were chosen for WCAG AA on the paper background. Focus rings are a 3 px violet outline, white on the dark section.
 - **Motion:** the hero stream and stamps respect `prefers-reduced-motion` (the stream starts frozen and the stamps appear without movement). The animated inbox is a single `role="img"` with a text description; its decorative copy is hidden from assistive tech.
+- **Reflow:** no horizontal scrolling at 320 CSS px (WCAG 1.4.10). The result card clips its landing-stamp animation, and an e2e test samples the page width on every frame while the stamp lands, on desktop and on a phone.
 - **Reading:** an 18 px base size, a 1.55 line height, line lengths under about 75 characters, and plain words.
 
 ## Verified

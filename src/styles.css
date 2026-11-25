@@ -554,6 +554,8 @@ main:focus {
   background: var(--slip);
   border: 2px solid var(--ink);
   border-radius: 0.25rem;
+  /* The stamp lands at 2.4x scale; clip it to the card so the page never widens and phones never zoom out. */
+  overflow: clip;
 }
 
 .result__head {
