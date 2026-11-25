@@ -1,5 +1,8 @@
 import { z } from 'zod';
 
+// Our CSP forbids eval, so zod must not probe `new Function` for its fast path (Chrome logs that as a violation).
+z.config({ jitless: true });
+
 /** Who is asking: the action plan is phrased and prioritised for them. */
 export const PERSONAS = ['general', 'elder', 'student', 'shopkeeper'] as const;
 /** How the message reached the user. */

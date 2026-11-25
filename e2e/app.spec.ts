@@ -17,7 +17,20 @@ test('landing page has no accessibility violations and no CSP errors', async ({ 
   expect(errors).toEqual([]);
 });
 
+/** Collects every Content Security Policy violation the page reports. */
+const watchCsp = async (page: Page): Promise<string[]> => {
+  const violations: string[] = [];
+  await page.exposeFunction('reportCsp', (v: string) => violations.push(v));
+  await page.addInitScript(() => {
+    document.addEventListener('securitypolicyviolation', (e) => {
+      void (window as unknown as { reportCsp: (v: string) => Promise<void> }).reportCsp(`${e.violatedDirective} ${e.blockedURI}`);
+    });
+  });
+  return violations;
+};
+
 test('a scam example gets a scam verdict and a plan, keyboard only', async ({ page }) => {
+  const cspViolations = await watchCsp(page);
   await page.goto('/check');
   await page.getByRole('button', { name: 'Fake KYC SMS' }).click();
   await page.getByRole('radio', { name: 'Opened the link' }).check();
@@ -27,6 +40,7 @@ test('a scam example gets a scam verdict and a plan, keyboard only', async ({ pa
   await expect(page.getByRole('list').filter({ hasText: 'Close that page' })).toBeVisible();
   await expect(page.locator('mark').first()).toBeVisible();
   await audit(page);
+  expect(cspViolations).toEqual([]);
 });
 
 test('the landing stamp never widens the page, so phones keep their zoom and taps land', async ({ page }) => {

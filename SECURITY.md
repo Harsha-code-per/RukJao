@@ -23,6 +23,7 @@ RukJao handles messages written by scammers, so every input is treated as hostil
 Strict Content Security Policy (`server/http/security.ts`):
 - `script-src 'self'`, `style-src 'self'`, `connect-src 'self'`, `object-src 'none'`, `frame-ancestors 'none'`
 - no inline scripts or styles, and no third-party CDNs. Fonts are self-hosted.
+- no `eval`: zod runs in `jitless` mode (`shared/schema.ts`), so the page triggers zero CSP violations. The e2e suite listens for `securitypolicyviolation` events through a full check and fails on any.
 
 Also sent: HSTS (2 years, preload), `Referrer-Policy: strict-origin-when-cross-origin`, `X-Content-Type-Options: nosniff`, and a Permissions-Policy that disables the camera, microphone, geolocation and payment.
 
