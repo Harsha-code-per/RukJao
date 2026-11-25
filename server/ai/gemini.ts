@@ -5,7 +5,8 @@ import { TACTICS, VERDICTS, type CheckRequest, type Tactic, type Verdict } from 
 const REASON_MAX = 120;
 const EXPLANATION_MAX = 700;
 const FLAGS_MAX = 5;
-const TIMEOUT_MS = 8000;
+/** Gemini rejects any client deadline under 10 s with a 400. */
+const TIMEOUT_MS = 10_000;
 
 export const aiReviewSchema = z.object({
   verdict: z.enum(VERDICTS),
