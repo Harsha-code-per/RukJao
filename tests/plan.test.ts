@@ -1,3 +1,10 @@
+/**
+ * Tests for `server/engine/plan.ts`: step order by what was already done, trick and
+ * persona steps, channel steps, language, and when the result is urgent.
+ *
+ * @see TESTING.md
+ */
+
 import { describe, expect, it } from 'vitest';
 import type { CheckRequest } from '../shared/schema';
 import { buildPlan, chooseSteps, isUrgent } from '../server/engine/plan';

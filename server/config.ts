@@ -1,3 +1,13 @@
+/**
+ * Runtime settings, read from the environment once and validated at startup.
+ *
+ * A malformed value stops the process at boot rather than failing on a live request.
+ * Every setting, with its default, is listed in `.env.example`. Only `server/index.ts`
+ * calls `loadConfig`; the rest of the server receives plain values.
+ *
+ * @see README.md › Configuration
+ */
+
 import { z } from 'zod';
 
 const DEFAULT_MODELS = 'gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.8-flash';
@@ -12,6 +22,7 @@ const envSchema = z.object({
   CACHE_SIZE: z.coerce.number().int().positive().default(500),
 });
 
+/** Validated settings, as `loadConfig` returns them. */
 export type Config = ReturnType<typeof loadConfig>;
 
 /** Reads and validates the environment once at startup. */

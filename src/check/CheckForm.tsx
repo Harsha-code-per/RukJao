@@ -1,8 +1,20 @@
+/**
+ * Checker form: the message and the four context questions that shape the plan.
+ *
+ * Every control is a native, labelled input. An empty message shows an error only after
+ * a submit attempt, linked to the field with `aria-describedby` and `aria-invalid`.
+ * Example buttons fill the form from `options.ts`. Submits to `CheckPage.tsx`.
+ *
+ * @see ACCESSIBILITY.md › Built in
+ * @see README.md › User journey
+ */
+
 import { useState, type SubmitEvent } from 'react';
 import { MESSAGE_MAX, type CheckRequest } from '../../shared/schema';
 import { ChoiceGroup } from './ChoiceGroup';
 import { ACTION_OPTIONS, CHANNEL_OPTIONS, LANGUAGE_OPTIONS, PERSONA_OPTIONS, SAMPLES } from './options';
 
+/** The form's starting state: empty message, the most common context. */
 export const EMPTY_REQUEST: CheckRequest = { message: '', persona: 'general', channel: 'sms', action: 'none', language: 'en' };
 
 interface CheckFormProps {

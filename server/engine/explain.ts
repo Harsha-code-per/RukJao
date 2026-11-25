@@ -1,3 +1,14 @@
+/**
+ * Offline explanation: a short "why" built only from what the rule engine found, in
+ * English or Hindi.
+ *
+ * Used whenever Gemini is switched off or fails, so every answer still names the
+ * warning signs and the trick. `TACTIC_NAMES` gives each scam family its reader-facing
+ * name. Called by `server/checker.ts`.
+ *
+ * @see docs/DECISIONS.md › 1. Rule engine first, AI second
+ */
+
 import type { Flag, Language, Tactic, Verdict } from '../../shared/schema';
 
 interface Outcome {
@@ -5,6 +16,7 @@ interface Outcome {
   tactic: Tactic;
 }
 
+/** Reader-facing name of each scam family. */
 export const TACTIC_NAMES: Record<Tactic, Record<Language, string>> = {
   otp_theft: { en: 'an OTP theft scam', hi: 'OTP चोरी का धोखा' },
   upi_collect: { en: 'a UPI "receive money" scam', hi: 'UPI "पैसे पाओ" धोखा' },

@@ -1,3 +1,13 @@
+/**
+ * Hero animation: messages stream in, then stop (ruk jao) and the scams are stamped.
+ *
+ * It freezes after `FREEZE_AFTER_MS`, or at once under reduced motion. The stream is
+ * hidden from assistive tech and the whole block is one image with a text description.
+ * Messages come from `inbox.ts`.
+ *
+ * @see ACCESSIBILITY.md › Built in
+ */
+
 import { useEffect, useState } from 'react';
 import { Stamp } from '../Stamp';
 import { INBOX } from './inbox';

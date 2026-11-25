@@ -1,3 +1,15 @@
+/**
+ * The original message, with every red flag marked where it occurs.
+ *
+ * Flags that overlap (a rule and the model quoting the same words) merge into one mark
+ * that lists every reason, and hidden text reads the reasons out, so the warning is
+ * never colour alone. The message is rendered as React text, never as HTML, so it
+ * cannot inject markup. Used by `Result.tsx`.
+ *
+ * @see ACCESSIBILITY.md › Built in
+ * @see SECURITY.md › Browser
+ */
+
 import type { Flag } from '../../shared/schema';
 
 interface Segment {

@@ -1,3 +1,13 @@
+/**
+ * "Warn my family": builds a short warning and hands it to the share sheet or the
+ * clipboard.
+ *
+ * The text goes only where the user sends it; nothing is posted to RukJao's server.
+ * Used by `Result.tsx`.
+ *
+ * @see SECURITY.md › Privacy
+ */
+
 import type { CheckResult, Language } from '../../shared/schema';
 import { RESULT_COPY } from './copy';
 

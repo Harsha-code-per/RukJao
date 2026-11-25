@@ -1,3 +1,14 @@
+/**
+ * The landing page at `/`: the promise, how RukJao decides, and the helpline to
+ * remember.
+ *
+ * The three "how it decides" steps describe what the server really does (`server/engine`,
+ * `server/ai/gemini.ts`, `server/engine/plan.ts`), so the page never promises more than
+ * the product.
+ *
+ * @see README.md › Approach and logic
+ */
+
 import { followLink } from '../lib/route';
 import { Inbox } from './Inbox';
 

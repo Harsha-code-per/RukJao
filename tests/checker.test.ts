@@ -1,3 +1,11 @@
+/**
+ * Tests for the pipeline in `server/checker.ts`: the AI can only raise a verdict,
+ * invented quotes are dropped, repeats come from cache, and a broken store never breaks
+ * a check.
+ *
+ * @see TESTING.md
+ */
+
 import { describe, expect, it, vi } from 'vitest';
 import type { CheckRequest } from '../shared/schema';
 import type { AiReview, Reviewer } from '../server/ai/gemini';

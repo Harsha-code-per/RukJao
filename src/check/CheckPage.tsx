@@ -1,3 +1,12 @@
+/**
+ * The checker screen at `/check`, loaded on demand by `App.tsx`.
+ *
+ * Owns the check state through `useCheck` and passes it to the form and the result.
+ * The result area is a polite live region, so the outcome is announced when it arrives.
+ *
+ * @see ACCESSIBILITY.md › Built in
+ */
+
 import { followLink } from '../lib/route';
 import { CheckForm } from './CheckForm';
 import { Result } from './Result';

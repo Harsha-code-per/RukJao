@@ -1,10 +1,18 @@
-/** Example messages for the hero. Scam ones are composites of patterns from public advisories. */
+/**
+ * Messages for the landing-page inbox: scams mixed with ordinary texts.
+ *
+ * The scams are composites of patterns from public advisories, with numbers masked, so
+ * no real person or sender is shown. Rendered by `Inbox.tsx`.
+ */
+
+/** One bubble in the hero. `scam` decides whether it gets stamped. */
 export interface InboxMessage {
   from: string;
   text: string;
   scam: boolean;
 }
 
+/** Shown twice in a row so the stream can loop without a gap. */
 export const INBOX: readonly InboxMessage[] = [
   { from: 'AD-BNKALRT', text: 'Your bank account will be blocked today. Update KYC now at bnk-kyc-update.xyz/u', scam: true },
   { from: 'Maa', text: 'Reached home safely beta. Call when you are free.', scam: false },

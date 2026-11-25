@@ -1,3 +1,15 @@
+/**
+ * Result card, in the order a worried reader needs it: verdict, the 1930 call when
+ * money or secrets have already left, the steps, why, the marked message, then sharing.
+ *
+ * Focus moves to the verdict heading so it is announced first. The risk meter uses the
+ * thresholds from `shared/schema.ts`, so its colour always matches the verdict. Wording
+ * comes from `copy.ts`; sharing from `share.ts`.
+ *
+ * @see ACCESSIBILITY.md › Built in
+ * @see PROBLEM_ALIGNMENT.md
+ */
+
 import { useEffect, useRef, useState } from 'react';
 import { RISK_MAX, SCAM_AT, SUSPICIOUS_AT, type CheckResult, type Language } from '../../shared/schema';
 import { Stamp } from '../Stamp';

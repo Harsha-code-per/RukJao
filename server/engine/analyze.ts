@@ -1,3 +1,16 @@
+/**
+ * Rule engine scoring: finds every red flag in a message, then turns the hits into a
+ * 0–100 risk, a verdict and the scam family behind it.
+ *
+ * Pure and synchronous. A rule adds its weight once however often it matches, so
+ * repeating "urgent" cannot push a message over a threshold, and a hard rule makes the
+ * verdict "scam" on its own. Rules come from `rules.ts`, link checks from `links.ts`,
+ * thresholds from `shared/schema.ts`. Called by `server/checker.ts`.
+ *
+ * @see docs/DECISIONS.md › 2. Hard rules for things no genuine sender asks
+ * @see README.md › 1. Rule engine (`server/engine`)
+ */
+
 import { RISK_MAX, SCAM_AT, SUSPICIOUS_AT, type Flag, type Language, type Tactic, type Verdict } from '../../shared/schema';
 import { findRiskyLinks } from './links';
 import { LINK_LABEL, LINK_WEIGHT, RULES } from './rules';
@@ -10,11 +23,13 @@ interface Signal {
   tactic: Tactic | null;
 }
 
+/** Flags for highlighting, signals for scoring. */
 export interface Detection {
   flags: Flag[];
   signals: Signal[];
 }
 
+/** The engine's answer before the AI review and the plan. */
 export interface Assessment {
   risk: number;
   verdict: Verdict;

@@ -1,3 +1,15 @@
+/**
+ * Per-client rate limit for `/api/check`, protecting the Gemini quota and the free tier.
+ *
+ * A fixed window per address, keyed on the last `X-Forwarded-For` entry because Cloud
+ * Run's front end appends that one and earlier entries can be forged. The table is
+ * cleared if it passes `MAX_TRACKED`, so a flood of addresses cannot exhaust memory.
+ * Mounted in `server/app.ts`.
+ *
+ * @see SECURITY.md › Input and API
+ * @see docs/DECISIONS.md › 7. One small Cloud Run service
+ */
+
 import type { MiddlewareHandler } from 'hono';
 
 const MAX_TRACKED = 10_000;

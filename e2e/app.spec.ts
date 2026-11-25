@@ -1,3 +1,12 @@
+/**
+ * End-to-end checks in a real browser, desktop and phone: axe WCAG 2.2 AA, zero CSP
+ * violations, a keyboard-only check, no horizontal overflow mid-animation, Hindi, and
+ * refusal of cross-site API calls.
+ *
+ * @see TESTING.md
+ * @see ACCESSIBILITY.md › Verified
+ */
+
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 

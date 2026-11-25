@@ -1,3 +1,15 @@
+/**
+ * Browser-facing protection: security headers on every response and a same-origin
+ * guard on the API.
+ *
+ * The CSP admits only this origin, with no inline code, third parties or framing. That
+ * is why fonts are self-hosted and zod runs jitless (`shared/schema.ts`). Both
+ * middlewares are mounted in `server/app.ts`, and the headers are asserted in
+ * `tests/app.test.ts`.
+ *
+ * @see SECURITY.md › Browser
+ */
+
 import type { MiddlewareHandler } from 'hono';
 import { secureHeaders } from 'hono/secure-headers';
 

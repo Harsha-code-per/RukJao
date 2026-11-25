@@ -1,3 +1,11 @@
+/**
+ * The rubber-stamp verdict mark, shared by the landing inbox and the result card.
+ *
+ * Decorative only (`aria-hidden`): the verdict is always given in text beside it. The
+ * rough ink edge is one SVG filter, rendered once by `App.tsx` and referenced from
+ * `styles.css`.
+ */
+
 import type { Verdict } from '../shared/schema';
 
 const WORDS: Record<Verdict, { hi: string; en: string }> = {

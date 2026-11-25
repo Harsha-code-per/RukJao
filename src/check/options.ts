@@ -1,7 +1,16 @@
+/**
+ * Answers for the four context questions, plus the ready-made example messages.
+ *
+ * Values are typed against `CheckRequest`, so renaming an enum in `shared/schema.ts`
+ * breaks the build here instead of sending a value the server rejects. Used by
+ * `CheckForm.tsx`.
+ */
+
 import type { CheckRequest } from '../../shared/schema';
 
 type Options<K extends keyof CheckRequest> = { value: CheckRequest[K]; label: string; lang?: string }[];
 
+/** Who got the message. */
 export const PERSONA_OPTIONS: Options<'persona'> = [
   { value: 'general', label: 'Me' },
   { value: 'elder', label: 'My parent or grandparent' },
@@ -9,6 +18,7 @@ export const PERSONA_OPTIONS: Options<'persona'> = [
   { value: 'shopkeeper', label: 'A shopkeeper' },
 ];
 
+/** How it arrived. */
 export const CHANNEL_OPTIONS: Options<'channel'> = [
   { value: 'sms', label: 'SMS' },
   { value: 'whatsapp', label: 'WhatsApp' },
@@ -16,6 +26,7 @@ export const CHANNEL_OPTIONS: Options<'channel'> = [
   { value: 'email', label: 'Email' },
 ];
 
+/** What has been done so far. */
 export const ACTION_OPTIONS: Options<'action'> = [
   { value: 'none', label: 'Nothing yet' },
   { value: 'clicked', label: 'Opened the link' },
@@ -23,6 +34,7 @@ export const ACTION_OPTIONS: Options<'action'> = [
   { value: 'paid', label: 'Paid or sent money' },
 ];
 
+/** Language of the answer. Hindi carries `lang` so it is read with Hindi voices. */
 export const LANGUAGE_OPTIONS: Options<'language'> = [
   { value: 'en', label: 'English' },
   { value: 'hi', label: 'हिन्दी', lang: 'hi' },

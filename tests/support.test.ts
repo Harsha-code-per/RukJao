@@ -1,3 +1,10 @@
+/**
+ * Tests for the small server modules: the LRU cache, config defaults and both pattern
+ * stores.
+ *
+ * @see TESTING.md
+ */
+
 import { describe, expect, it, vi } from 'vitest';
 import { lruCache } from '../server/cache';
 import { loadConfig } from '../server/config';

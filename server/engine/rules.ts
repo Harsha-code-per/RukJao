@@ -1,3 +1,16 @@
+/**
+ * Red-flag rules: every signal the engine looks for, kept as data.
+ *
+ * Each rule carries a weight, the scam family it points to, a label in both languages
+ * and patterns for English, Hinglish and Hindi. Patterns look for a request near the
+ * secret ("share your OTP"), not the secret alone, so a genuine bank OTP notice stays
+ * safe. Adding a pattern means one entry here and one case in `tests/engine.test.ts`.
+ * Read by `analyze.ts`.
+ *
+ * @see docs/DECISIONS.md › 2. Hard rules for things no genuine sender asks
+ * @see README.md › Sources
+ */
+
 import type { Language, Tactic } from '../../shared/schema';
 
 /** One red-flag signal. `weight` adds to the 0–100 risk score. */
@@ -179,5 +192,7 @@ export const LINK_LABEL: Record<Language, string> = {
   en: 'Link that hides where it really goes',
   hi: 'संदिग्ध लिंक, असली पता छिपा है',
 };
+/** Risk added once when any link in the message is risky. */
 export const LINK_WEIGHT = 25;
+/** Flag id for red flags quoted by the AI reviewer. */
 export const AI_FLAG_ID = 'ai_signal';

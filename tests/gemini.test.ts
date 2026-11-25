@@ -1,3 +1,10 @@
+/**
+ * Tests for `server/ai/gemini.ts` with a fake `Generate` and a mocked SDK: prompt
+ * fencing, model fall-through, invalid output and the 10 s client deadline.
+ *
+ * @see TESTING.md
+ */
+
 import { describe, expect, it, vi } from 'vitest';
 import type { CheckRequest } from '../shared/schema';
 import { buildPrompt, createReviewer, type Generate } from '../server/ai/gemini';

@@ -1,3 +1,15 @@
+/**
+ * App shell: the skip link, a single `<main>`, and the switch between the landing page
+ * and the checker.
+ *
+ * The checker is code-split, so the landing page ships less JavaScript. On every route
+ * change the shell sets the title, scrolls to the top and moves focus to `<main>`, so a
+ * screen reader announces the new screen. Routing is `src/lib/route.ts`.
+ *
+ * @see ACCESSIBILITY.md › Built in
+ * @see EFFICIENCY.md › Client
+ */
+
 import { lazy, Suspense, useEffect, useRef } from 'react';
 import { Landing } from './landing/Landing';
 import { InkFilter } from './Stamp';

@@ -1,7 +1,15 @@
+/**
+ * State for one check: idle, loading, then done or error.
+ *
+ * A new check or a reset aborts the request in flight, so a slow answer can never
+ * replace a newer one. Calls `src/lib/api.ts`; used by `CheckPage.tsx`.
+ */
+
 import { useRef, useState } from 'react';
 import type { CheckRequest, CheckResult } from '../../shared/schema';
 import { postCheck } from '../lib/api';
 
+/** Where the current check is. `done` keeps the request so the result can quote the message. */
 export type CheckState =
   | { status: 'idle' }
   | { status: 'loading' }

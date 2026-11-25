@@ -231,7 +231,7 @@ The response, also defined in `shared/schema.ts` (shown here from the rule engin
 
 | Criterion | Where to look |
 |---|---|
-| **Code quality** | [CODE_QUALITY.md](CODE_QUALITY.md) (with a measured audit) and [docs/DECISIONS.md](docs/DECISIONS.md) (architecture decisions). Shared zod contract in `shared/schema.ts`. Pure engine functions with data-table rules and steps. Integrations injected behind one-function types. `eslint.config.js`: `strictTypeChecked`, complexity ≤ 8, nesting ≤ 3, ≤ 3 parameters, functions ≤ 30 lines. |
+| **Code quality** | [CODE_QUALITY.md](CODE_QUALITY.md) (code map and measured audit) and [docs/DECISIONS.md](docs/DECISIONS.md) (architecture decisions). Shared zod contract in `shared/schema.ts`. Pure engine functions with data-table rules and steps. Integrations injected behind one-function types. `eslint.config.js`: `strictTypeChecked`, complexity ≤ 8, nesting ≤ 3, ≤ 3 parameters, functions ≤ 30 lines. |
 | **Security** | [SECURITY.md](SECURITY.md). Strict CSP and HSTS in `server/http/security.ts`; same-origin check, body limit, rate limit and zod validation in `server/app.ts`; prompt-injection fencing and the stricter-verdict rule in `server/ai/gemini.ts` and `server/checker.ts`; Secret Manager, a least-privilege service account, a non-root container, CodeQL and `npm audit` in CI. |
 | **Efficiency** | [EFFICIENCY.md](EFFICIENCY.md). Engine first, AI only for unique requests. LRU cache. Code-split checker. Immutable hashed assets. Self-hosted subset fonts loaded by `unicode-range`. Scale-to-zero Cloud Run. |
 | **Testing** | [TESTING.md](TESTING.md). 80 Vitest tests at 100% line coverage, with thresholds enforced. 10 Playwright runs (desktop and Pixel 7) with axe scans, all in CI on every push. |
@@ -250,7 +250,7 @@ The response, also defined in `shared/schema.ts` (shown here from the rule engin
 | **Data over branches** | Rules, steps, tactic names and UI copy are typed tables (`RULES`, `STEPS`, `BY_ACTION`, `RESULT_COPY`). Adding a scam family means adding rows, not `if` statements. |
 | **Fail safe** | The AI can only make a verdict stricter. A broken model, store or network falls back to the engine. Errors return one safe JSON message. |
 | **KISS / YAGNI** | Five runtime libraries (Hono, React, zod, the Gemini SDK, firebase-admin) plus a self-hosted font. No router, state or CSS library: the History API, `useState` and plain CSS are enough. Deliberate shortcuts are marked `ponytail:` with their limit and upgrade path. |
-| **Clean code** | Named constants, a "why" doc comment on every export, `strictTypeChecked`, `exactOptionalPropertyTypes`, `noUncheckedIndexedAccess`. Every rule is an ESLint error in CI. |
+| **Clean code** | A module header on every file (role, reason, collaborators, governing doc), named constants, a "why" doc comment on every export, `strictTypeChecked`, `exactOptionalPropertyTypes`, `noUncheckedIndexedAccess`. Every rule is an ESLint error in CI. |
 
 ---
 

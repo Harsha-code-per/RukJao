@@ -1,3 +1,10 @@
+/**
+ * Result-card wording in English and Hindi, chosen by the language picked for the answer.
+ *
+ * Kept out of the components so each pair of translations sits side by side for review.
+ * Used by `Result.tsx` and `share.ts`.
+ */
+
 import type { CheckResult, Language, Verdict } from '../../shared/schema';
 
 interface ResultCopy {

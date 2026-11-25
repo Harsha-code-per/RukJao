@@ -1,3 +1,11 @@
+/**
+ * Tests for the rule engine (`server/engine/analyze.ts`, `rules.ts`, `links.ts`,
+ * `explain.ts`): hard and soft signals, the genuine-OTP-notice case, Hindi, flag spans,
+ * risky links and the offline explanation.
+ *
+ * @see TESTING.md
+ */
+
 import { describe, expect, it } from 'vitest';
 import { assess, detect } from '../server/engine/analyze';
 import { SCAM_AT } from '../shared/schema';

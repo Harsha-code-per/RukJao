@@ -1,3 +1,13 @@
+/**
+ * A question with one answer, drawn as chips.
+ *
+ * Native radios inside a fieldset and legend keep arrow-key movement and screen-reader
+ * grouping for free. `useId` keeps radio names unique if a question appears twice. Used
+ * by `CheckForm.tsx`.
+ *
+ * @see ACCESSIBILITY.md › Built in
+ */
+
 import { useId } from 'react';
 
 interface ChoiceGroupProps<T extends string> {

@@ -1,3 +1,9 @@
+/**
+ * End-to-end config: runs the production build on desktop Chrome and a Pixel 7.
+ *
+ * @see TESTING.md
+ */
+
 import { defineConfig, devices } from '@playwright/test';
 
 const PORT = 4173;

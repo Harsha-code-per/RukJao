@@ -1,3 +1,13 @@
+/**
+ * Routing for two screens on the History API, without a router library.
+ *
+ * `navigate` pushes a path and fires `popstate`, so back, forward and in-app links all
+ * update `usePath` the same way. `followLink` leaves new-tab and modified clicks to the
+ * browser. Used by `App.tsx` and the screen headers.
+ *
+ * @see docs/DECISIONS.md › 8. No UI framework beyond React
+ */
+
 import { useEffect, useState, type MouseEvent } from 'react';
 
 const ROUTE_EVENT = 'popstate';

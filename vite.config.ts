@@ -1,3 +1,10 @@
+/**
+ * Build and unit-test config: the React plugin, the dev proxy to the API, and Vitest
+ * with enforced coverage thresholds.
+ *
+ * @see TESTING.md
+ */
+
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 

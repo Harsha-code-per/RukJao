@@ -1,3 +1,15 @@
+/**
+ * Weekly scam-family counter behind "people checked this kind of trick N times this
+ * week".
+ *
+ * It stores a tactic id and a number per week, never message text. Production uses
+ * Firestore, one document per family per week updated with an atomic increment; local
+ * runs and tests use a Map. Both satisfy `PatternStore`, and `server/index.ts` picks one.
+ *
+ * @see docs/DECISIONS.md › 6. Store counts, never messages
+ * @see SECURITY.md › Privacy
+ */
+
 import type { Firestore } from 'firebase-admin/firestore';
 import { FieldValue } from 'firebase-admin/firestore';
 import type { Tactic } from '../../shared/schema';
@@ -9,6 +21,7 @@ export interface PatternStore {
   record: (tactic: Tactic) => Promise<number>;
 }
 
+/** Week number since the epoch, so every instance counts into the same weekly document. */
 export const weekBucket = (now: number): number => Math.floor(now / WEEK_MS);
 
 /** Firestore-backed counter: one document per tactic per week, incremented atomically. */

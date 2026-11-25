@@ -1,3 +1,15 @@
+/**
+ * Production entry point and the only composition root: reads the config and wires
+ * real services into the app.
+ *
+ * On Cloud Run the pattern counter is Firestore, authenticated as the service account
+ * with no key file; locally it is in memory. The Gemini reviewer is switched on only
+ * when `GEMINI_API_KEY` is set, otherwise every answer comes from the rule engine.
+ *
+ * @see docs/DECISIONS.md › 5. Dependencies are injected, wired in one file
+ * @see README.md › Deploy
+ */
+
 import { serve } from '@hono/node-server';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';

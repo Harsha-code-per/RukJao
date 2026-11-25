@@ -1,3 +1,11 @@
+/**
+ * HTTP tests for `server/app.ts` and `server/http/*`: health, validation, body limit,
+ * origin check, rate limit, JSON errors, the CSP and static caching. The checker is a
+ * fake, so these run without the engine or the network.
+ *
+ * @see TESTING.md
+ */
+
 import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';

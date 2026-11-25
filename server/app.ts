@@ -1,3 +1,19 @@
+/**
+ * HTTP surface of the service: security headers, the `/api/check` route, health,
+ * and the built client.
+ *
+ * The check route refuses cheaply before it works expensively: origin, body size and
+ * rate are checked before the body is parsed, and the body is schema-validated before
+ * the engine or Gemini see it. Every failure is JSON with a 4xx, or a generic 500 that
+ * never echoes internals.
+ *
+ * Built from injected dependencies, wired for production in `server/index.ts` and
+ * driven directly in `tests/app.test.ts`.
+ *
+ * @see SECURITY.md › Input and API
+ * @see README.md › API
+ */
+
 import { serveStatic } from '@hono/node-server/serve-static';
 import { Hono } from 'hono';
 import { bodyLimit } from 'hono/body-limit';
@@ -12,6 +28,7 @@ const MINUTE_MS = 60_000;
 const HTTP = { badRequest: 400, notFound: 404, tooLarge: 413, serverError: 500 } as const;
 const IMMUTABLE = 'public, max-age=31536000, immutable';
 
+/** Everything the HTTP layer needs, injected so tests can pass fakes. */
 export interface AppDeps {
   check: Checker;
   ratePerMinute: number;

@@ -1,4 +1,14 @@
-/** Finds links in a message and says which ones hide where they really go. */
+/**
+ * Link checker: finds the links in a message and flags the ones that hide where they
+ * really go.
+ *
+ * A link is risky if it is shortened, a bare IP, punycode, plain http, an .apk
+ * download, on a throwaway domain ending, or uses a bank or government name on a domain
+ * that is not the official one. Each test is a one-line predicate in a list, so adding
+ * one is one entry. Feeds `detect` in `analyze.ts` as the `risky_link` signal.
+ *
+ * @see README.md › 1. Rule engine (`server/engine`)
+ */
 
 const URL_PATTERN = /\b(?:https?:\/\/|www\.)[^\s<>"']+|\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|in|net|org|xyz|top|click|icu|live|online|info|buzz|site|co|me|ly|gd|at|cc|sbi)\/[^\s<>"']*/gi;
 
@@ -8,6 +18,7 @@ const BRANDS = ['sbi', 'hdfc', 'icici', 'axis', 'kotak', 'paytm', 'phonepe', 'gp
 const OFFICIAL_SUFFIXES = ['.gov.in', '.nic.in', 'sbi.co.in', 'onlinesbi.sbi', 'hdfcbank.com', 'icicibank.com', 'axisbank.com', 'kotak.com', 'paytm.com', 'phonepe.com', 'npci.org.in'];
 const IPV4 = /^\d{1,3}(?:\.\d{1,3}){3}$/;
 
+/** Where a risky link sits in the message. */
 export interface LinkHit {
   start: number;
   end: number;

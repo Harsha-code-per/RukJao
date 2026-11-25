@@ -1,3 +1,17 @@
+/**
+ * Action planner: turns a verdict and the reader's context into ordered "do this now"
+ * steps.
+ *
+ * The order is fixed: what the reader already did (paid, shared, clicked) comes first
+ * because it decides what is urgent, then the fact that defeats this trick, then a step
+ * for who they are, then one for how the message arrived. Steps are bilingual data, so
+ * the advice can be reviewed without reading logic. Helplines and portals are the
+ * official Government of India ones. Called by `server/checker.ts`.
+ *
+ * @see docs/DECISIONS.md › 3. The plan is ordered by what the user already did
+ * @see PROBLEM_ALIGNMENT.md › Example decisions
+ */
+
 import type { CheckRequest, Language, Tactic, Verdict } from '../../shared/schema';
 
 type Text = Record<Language, string>;

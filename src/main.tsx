@@ -1,3 +1,9 @@
+/**
+ * Browser entry point: loads the fonts and styles, then mounts `<App>` in StrictMode.
+ *
+ * @see src/App.tsx
+ */
+
 import './fonts.css';
 import './styles.css';
 import { StrictMode } from 'react';

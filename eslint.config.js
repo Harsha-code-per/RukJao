@@ -1,3 +1,10 @@
+/**
+ * Lint rules every source file must pass with zero warnings: strict type-checked rules,
+ * plus limits on complexity, nesting, parameters and function length.
+ *
+ * @see CODE_QUALITY.md › Enforced by tooling (`eslint.config.js`, `tsconfig.json`)
+ */
+
 import js from '@eslint/js';
 import reactHooks from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';

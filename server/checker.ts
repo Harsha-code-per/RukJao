@@ -1,3 +1,18 @@
+/**
+ * The check pipeline: rule engine, then the optional Gemini review, then the merged
+ * verdict, the action plan and the weekly count.
+ *
+ * The model is a second opinion that may only make a verdict stricter, and a red flag
+ * it quotes is kept only if that exact text is in the message. Answers are cached under
+ * a SHA-256 of the request, so message text never becomes a stored key.
+ *
+ * Collaborators: `server/engine/*` (detection, plan, fallback text), `server/ai/gemini.ts`
+ * (review), `server/store/patterns.ts` (counts). Called by `/api/check` in `server/app.ts`.
+ *
+ * @see docs/DECISIONS.md › 1. Rule engine first, AI second
+ * @see docs/DECISIONS.md › 6. Store counts, never messages
+ */
+
 import { createHash } from 'node:crypto';
 import { SCAM_AT, SUSPICIOUS_AT, type CheckRequest, type CheckResult, type Flag, type Verdict } from '../shared/schema';
 import type { AiReview, Reviewer } from './ai/gemini';
@@ -11,12 +26,14 @@ import type { PatternStore } from './store/patterns';
 const SEVERITY: Record<Verdict, number> = { safe: 0, suspicious: 1, scam: 2 };
 const RISK_FLOOR: Record<Verdict, number> = { safe: 0, suspicious: SUSPICIOUS_AT, scam: SCAM_AT };
 
+/** The reviewer is null when no Gemini key is set. */
 export interface CheckerDeps {
   review: Reviewer | null;
   store: PatternStore;
   cacheSize: number;
 }
 
+/** One complete check, from request to the result the client shows. */
 export type Checker = (request: CheckRequest) => Promise<CheckResult>;
 
 /** AI may raise the verdict, never lower it: a hard rule hit stays a scam whatever the model says. */

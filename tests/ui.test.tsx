@@ -1,3 +1,10 @@
+/**
+ * Component tests for the client: highlighting, the landing page, the full checker
+ * flow with every context choice, errors, reset, sharing and the API client.
+ *
+ * @see TESTING.md
+ */
+
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
