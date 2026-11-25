@@ -1,8 +1,8 @@
 import { createHash } from 'node:crypto';
-import type { CheckRequest, CheckResult, Flag, Verdict } from '../shared/schema';
+import { SCAM_AT, SUSPICIOUS_AT, type CheckRequest, type CheckResult, type Flag, type Verdict } from '../shared/schema';
 import type { AiReview, Reviewer } from './ai/gemini';
 import { lruCache } from './cache';
-import { assess, detect, SCAM_AT, SUSPICIOUS_AT, type Assessment } from './engine/analyze';
+import { assess, detect, type Assessment } from './engine/analyze';
 import { explain } from './engine/explain';
 import { buildPlan, isUrgent } from './engine/plan';
 import { AI_FLAG_ID } from './engine/rules';

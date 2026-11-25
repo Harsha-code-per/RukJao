@@ -1,10 +1,6 @@
-import type { Flag, Language, Tactic, Verdict } from '../../shared/schema';
+import { RISK_MAX, SCAM_AT, SUSPICIOUS_AT, type Flag, type Language, type Tactic, type Verdict } from '../../shared/schema';
 import { findRiskyLinks } from './links';
 import { LINK_LABEL, LINK_WEIGHT, RULES } from './rules';
-
-export const SCAM_AT = 60;
-export const SUSPICIOUS_AT = 25;
-const MAX_RISK = 100;
 
 /** Rule metadata the scorer needs, keyed by flag id. */
 interface Signal {
@@ -66,6 +62,6 @@ const leadingTactic = (signals: Signal[]): Tactic => {
 export const assess = (signals: Signal[]): Assessment => {
   const hasHard = signals.some((s) => s.hard);
   const sum = signals.reduce((total, s) => total + s.weight, 0);
-  const risk = Math.min(MAX_RISK, hasHard ? Math.max(sum, SCAM_AT) : sum);
+  const risk = Math.min(RISK_MAX, hasHard ? Math.max(sum, SCAM_AT) : sum);
   return { risk, verdict: verdictFor(risk, hasHard), tactic: leadingTactic(signals) };
 };

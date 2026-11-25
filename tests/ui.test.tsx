@@ -89,6 +89,22 @@ describe('checker flow', () => {
     expect(sent.action).toBe('paid');
   });
 
+  it('sends every context choice and answers in the chosen language', async () => {
+    const fetchSpy = respond({ ...RESULT, seenThisWeek: 1 });
+    const user = userEvent.setup();
+    window.history.replaceState(null, '', '/check');
+    render(<App />);
+    await user.type(await screen.findByLabelText(/paste the message/i), 'Enter PIN to receive money');
+    for (const name of ['A shopkeeper', 'Phone call', 'Shared an OTP, PIN or details', 'हिन्दी']) {
+      await user.click(screen.getByRole('radio', { name }));
+    }
+    await user.click(screen.getByRole('button', { name: 'Check this message' }));
+    expect(await screen.findByRole('heading', { name: 'यह धोखा है' })).toHaveFocus();
+    expect(screen.getByText(/1 बार/)).toBeInTheDocument();
+    const sent = JSON.parse(String(fetchSpy.mock.calls[0]?.[1]?.body)) as Record<string, string>;
+    expect(sent).toMatchObject({ persona: 'shopkeeper', channel: 'call', action: 'shared', language: 'hi' });
+  });
+
   it('asks for a message instead of sending an empty one', async () => {
     const fetchSpy = respond(RESULT);
     window.history.replaceState(null, '', '/check');

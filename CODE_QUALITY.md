@@ -24,6 +24,7 @@ RukJao is deliberately small: about 30 source files, one package, no framework b
 ## Conventions
 
 - Named constants for every threshold (`SCAM_AT`, `BODY_LIMIT_BYTES`, `WEEK_MS`…) and HTTP status maps instead of bare numbers.
+- Shared values live in one place: the risk thresholds (`SUSPICIOUS_AT`, `SCAM_AT`, `RISK_MAX`) are defined in `shared/schema.ts` and drive the engine's verdict, the API schema and the result meter alike.
 - Each exported function has a one-line doc comment saying *why*, not *what*.
 - Deliberate shortcuts are marked `ponytail:` with their limit and upgrade path (for example, the in-memory rate limiter).
 - No dead code and no speculative abstraction: one implementation, no interface.

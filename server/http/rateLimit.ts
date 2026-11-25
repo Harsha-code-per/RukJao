@@ -2,6 +2,7 @@ import type { MiddlewareHandler } from 'hono';
 
 const MAX_TRACKED = 10_000;
 const HTTP_TOO_MANY = 429;
+const SECOND_MS = 1000;
 
 interface Window {
   start: number;
@@ -27,7 +28,7 @@ export const rateLimit = (limit: number, windowMs: number, now: () => number = D
     if (windows.size >= MAX_TRACKED) windows.clear();
     windows.set(ip, window);
     if (window.count > limit) {
-      c.header('Retry-After', String(Math.ceil((window.start + windowMs - time) / 1000)));
+      c.header('Retry-After', String(Math.ceil((window.start + windowMs - time) / SECOND_MS)));
       return c.json({ error: 'Too many checks. Please wait a minute and try again.' }, HTTP_TOO_MANY);
     }
     await next();

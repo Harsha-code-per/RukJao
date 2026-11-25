@@ -50,6 +50,7 @@ describe('API', () => {
 
   it('rejects cross-site requests and accepts same-site ones', async () => {
     expect((await post(setup(), VALID, { origin: 'https://evil.example' })).status).toBe(403);
+    expect((await post(setup(), VALID, { origin: 'not a url' })).status).toBe(403);
     expect((await post(setup(), VALID, { origin: 'https://rukjao.test' })).status).toBe(200);
   });
 

@@ -27,12 +27,13 @@ const OPENERS: Record<Verdict, Record<Language, string>> = {
 
 const SIGNS: Record<Language, string> = { en: 'Warning signs', hi: 'खतरे के संकेत' };
 const MATCHES: Record<Language, string> = { en: 'It follows the pattern of', hi: 'यह इस तरह का है:' };
+const STOP: Record<Language, string> = { en: '.', hi: '।' };
 
 /** Plain-language explanation built only from what the rule engine found. Used when AI is unavailable. */
 export const explain = ({ verdict, tactic }: Outcome, flags: Flag[], language: Language): string => {
   const parts = [OPENERS[verdict][language]];
   const labels = [...new Set(flags.map((flag) => flag.label))];
-  if (labels.length > 0) parts.push(`${SIGNS[language]}: ${labels.join('; ')}.`);
-  if (verdict !== 'safe' && tactic !== 'unknown') parts.push(`${MATCHES[language]} ${TACTIC_NAMES[tactic][language]}.`);
+  if (labels.length > 0) parts.push(`${SIGNS[language]}: ${labels.join('; ')}${STOP[language]}`);
+  if (verdict !== 'safe' && tactic !== 'unknown') parts.push(`${MATCHES[language]} ${TACTIC_NAMES[tactic][language]}${STOP[language]}`);
   return parts.join(' ');
 };

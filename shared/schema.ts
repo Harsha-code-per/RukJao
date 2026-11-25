@@ -25,6 +25,11 @@ export const TACTICS = [
 
 export const MESSAGE_MAX = 2000;
 
+/** Risk runs 0–100. The engine's verdict and the result meter share these thresholds. */
+export const RISK_MAX = 100;
+export const SUSPICIOUS_AT = 25;
+export const SCAM_AT = 60;
+
 export const checkRequestSchema = z.object({
   message: z.string().trim().min(1, 'Paste the message you want checked.').max(MESSAGE_MAX),
   persona: z.enum(PERSONAS),
@@ -42,7 +47,7 @@ export const flagSchema = z.object({
 
 export const checkResultSchema = z.object({
   verdict: z.enum(VERDICTS),
-  risk: z.number().int().min(0).max(100),
+  risk: z.number().int().min(0).max(RISK_MAX),
   tactic: z.enum(TACTICS),
   urgent: z.boolean(),
   flags: z.array(flagSchema),

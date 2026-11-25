@@ -24,10 +24,12 @@ export const securityHeaders = secureHeaders({
 
 const HTTP_FORBIDDEN = 403;
 
-/** Rejects API calls whose Origin is another site. Browsers always send Origin on cross-site POSTs. */
+const hostOf = (origin: string): string | null => URL.parse(origin)?.host ?? null;
+
+/** Rejects API calls whose Origin is another site, or unreadable. Browsers always send Origin on cross-site POSTs. */
 export const sameOrigin: MiddlewareHandler = async (c, next) => {
   const origin = c.req.header('origin');
-  if (origin !== undefined && new URL(origin).host !== c.req.header('host')) {
+  if (origin !== undefined && hostOf(origin) !== c.req.header('host')) {
     return c.json({ error: 'Cross-site requests are not allowed.' }, HTTP_FORBIDDEN);
   }
   await next();

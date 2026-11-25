@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { CheckResult, Language } from '../../shared/schema';
+import { RISK_MAX, SCAM_AT, SUSPICIOUS_AT, type CheckResult, type Language } from '../../shared/schema';
 import { Stamp } from '../Stamp';
 import { RESULT_COPY } from './copy';
 import { Highlight } from './Highlight';
@@ -35,7 +35,7 @@ export const Result = ({ result, message, language, onReset }: ResultProps) => {
         <h2 id="verdict" ref={heading} tabIndex={-1}>{copy.title[result.verdict]}</h2>
         <p className="risk">
           <span>{copy.risk(result.risk)}</span>
-          <meter min={0} max={100} low={24} high={59} optimum={0} value={result.risk} aria-label={copy.risk(result.risk)} />
+          <meter min={0} max={RISK_MAX} low={SUSPICIOUS_AT - 1} high={SCAM_AT - 1} optimum={0} value={result.risk} aria-label={copy.risk(result.risk)} />
         </p>
       </div>
 

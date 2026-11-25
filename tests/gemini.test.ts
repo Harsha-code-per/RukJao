@@ -49,15 +49,26 @@ describe('reviewer', () => {
   });
 });
 
-const generateContent = vi.fn(() => Promise.resolve({ text: valid }));
-vi.mock('@google/genai', () => ({
-  GoogleGenAI: vi.fn(function GoogleGenAI() {
+const { generateContent, GoogleGenAI } = vi.hoisted(() => {
+  const generateContent = vi.fn();
+  const GoogleGenAI = vi.fn(function GoogleGenAI() {
     return { models: { generateContent } };
-  }),
-}));
+  });
+  return { generateContent, GoogleGenAI };
+});
+vi.mock('@google/genai', () => ({ GoogleGenAI }));
 
 describe('live Gemini call', () => {
+  it('keeps the client deadline at or above the 10 s minimum Gemini accepts', async () => {
+    const { geminiGenerate } = await import('../server/ai/gemini');
+    geminiGenerate('key');
+    expect(GoogleGenAI).toHaveBeenCalledWith(expect.objectContaining({ httpOptions: { timeout: expect.any(Number) as unknown } }));
+    const [options] = GoogleGenAI.mock.lastCall as unknown as [{ httpOptions: { timeout: number } }];
+    expect(options.httpOptions.timeout).toBeGreaterThanOrEqual(10_000);
+  });
+
   it('asks for schema-shaped JSON with the safety instruction', async () => {
+    generateContent.mockResolvedValueOnce({ text: valid });
     const { geminiGenerate, SYSTEM_INSTRUCTION } = await import('../server/ai/gemini');
     expect(await geminiGenerate('key')('model-x', 'prompt')).toBe(valid);
     expect(generateContent).toHaveBeenCalledWith(

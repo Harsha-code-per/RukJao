@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { assess, detect, SCAM_AT } from '../server/engine/analyze';
+import { assess, detect } from '../server/engine/analyze';
+import { SCAM_AT } from '../shared/schema';
 import { explain } from '../server/engine/explain';
 import { findRiskyLinks, isRiskyLink } from '../server/engine/links';
 
