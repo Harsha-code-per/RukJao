@@ -41,7 +41,7 @@ const mountClient = (app: Hono, root: string): void => {
 export const createApp = ({ check, ratePerMinute, staticRoot }: AppDeps): Hono => {
   const app = new Hono();
   app.use(securityHeaders, compress());
-  app.get('/healthz', (c) => c.json({ status: 'ok' }));
+  app.get('/api/health', (c) => c.json({ status: 'ok' }));
   app.post(
     '/api/check',
     sameOrigin,

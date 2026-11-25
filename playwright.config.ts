@@ -14,7 +14,7 @@ export default defineConfig({
   // Production build with AI off, so results are deterministic and free.
   webServer: {
     command: `npm run build && PORT=${PORT} GEMINI_API_KEY= node dist-server/index.js`,
-    url: `http://localhost:${PORT}/healthz`,
+    url: `http://localhost:${PORT}/api/health`,
     reuseExistingServer: !process.env.CI,
   },
 });

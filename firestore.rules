@@ -1,0 +1,9 @@
+rules_version = '2';
+// Only the RukJao server (Admin SDK, service account) touches Firestore. Clients get nothing.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

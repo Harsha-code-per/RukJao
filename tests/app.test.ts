@@ -23,7 +23,7 @@ const post = (app: Hono, body: unknown, headers: Record<string, string> = {}) =>
 
 describe('API', () => {
   it('reports health', async () => {
-    const res = await setup().request('/healthz');
+    const res = await setup().request('/api/health');
     expect(await res.json()).toEqual({ status: 'ok' });
   });
 
@@ -69,7 +69,7 @@ describe('API', () => {
   });
 
   it('sends a strict content security policy', async () => {
-    const res = await setup().request('/healthz');
+    const res = await setup().request('/api/health');
     const csp = res.headers.get('content-security-policy') ?? '';
     expect(csp).toContain("script-src 'self'");
     expect(csp).toContain("frame-ancestors 'none'");
